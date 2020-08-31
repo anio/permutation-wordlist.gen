@@ -1,0 +1,71 @@
+#!/usr/bin/python
+
+import argparse
+
+
+letters_dict = {
+    ' ': ['@', '#', '$', '-', '_', '+', ''],
+    'a': ['a', 'A', '@'],
+    'b': ['b', 'B', '8'],
+    'c': ['c', 'C', 'k', 'K'],
+    'd': ['d', 'D'],
+    'e': ['e', 'E', '3'],
+    'f': ['f', 'F', 'ph', 'pH', 'Ph', 'PH'],
+    'g': ['g', 'G', '6', '9'],
+    'h': ['h', 'H', ],
+    'i': ['i', 'I', '!', '1'],
+    'j': ['j', 'J'],
+    'k': ['k', 'K'],
+    'l': ['l', 'L', '1'],
+    'm': ['m', 'M'],
+    'n': ['n', 'N'],
+    'o': ['o', 'O', '0'],
+    'p': ['p', 'P'],
+    'q': ['q', 'Q', 'k', 'K'],
+    'r': ['r', 'R', '2'],
+    's': ['s', 'S', '5'],
+    't': ['t', 'T', '7'],
+    'u': ['u', 'U'],
+    'v': ['v', 'V'],
+    'w': ['w', 'W', 'vv', 'VV'],
+    'x': ['x', 'X'],
+    'y': ['y', 'Y'],
+    'z': ['z', 'Z', '2']
+}
+
+
+def permute(word):
+    if len(word) > 0:
+        current = word[0].lower()
+        rest = word[1:]
+
+        if current in letters_dict:
+            substitutions = letters_dict[current]
+        else:
+            substitutions = [current]
+
+        if len(rest) > 0:
+            perms = [s + p for s in substitutions for p in permute(rest)]
+        else:
+            perms = substitutions
+
+        return perms
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Permutate wordlists.')
+    parser.add_argument('input_file', help='an input wordlist')
+    parser.add_argument('output_file', help='an output file')
+
+    args = parser.parse_args()
+
+    with open(args.input_file) as f:
+        words = f.readlines()
+
+        with open(args.output_file, "w") as out:
+            for word in words:
+                out.writelines([p for p in permute(word)])
+
+
+if __name__ == '__main__':
+    main()
