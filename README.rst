@@ -1,4 +1,4 @@
-permutation-wordlist.gen
+permutation-wordlist.gen 🧬
 ========================
 A simple premutation-based wordlist generator
 
